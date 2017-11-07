@@ -19,19 +19,19 @@ let geocode_array=[]
   })
 
   $(".sort-elevations").click(() => {
-    if (location_array.length>1){
-      locations
+    if (geocode_array.length>1){
+      console.log(geocode_array)
+      google_elevations("denver")
     }
 })
 
 
 const ACCESS_KEY = 'AIzaSyAj8bYpM2M0T8I4xRKqvToSn9_fsRYC6dc'
 
-let google_locations = (local)=>{
-  $.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${local}&key=${ACCESS_KEY}`, data =>{
-  })
-  .done((data)=>{
-    console.log(data)
+let google_locations = local => {
+  $.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${local}&key=${ACCESS_KEY}`)
+  .done(data => {
+    geocode_array.push(data.results["0"])
   })
   .fail(()=> {
     console.log( "error" );
@@ -39,6 +39,19 @@ let google_locations = (local)=>{
 }
 
 
+//installing the map
+  var uluru = {
+    lat: 39.7392358,
+    lng: -104.990251
+  };
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: uluru
+  });
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
 });
 
 $(document).on('click','.remove-location', function(){

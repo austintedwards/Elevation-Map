@@ -1,34 +1,48 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-  <title>Elevation Map</title>
-  <!--Import Google Icon Font-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-
-  <script src="app.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-
-    <ul id="slide-out" class="side-nav">
-      <input type="text" class="location" name="" value="">
-      <button type="button" class= "add-location" name="button">Add Location</button>
-      <ul class = "location-list">
-
-      </ul>
-    </br>
-      <button type="button" class= "sort-elevations" name="button">Sort Elevations</button>
-
-    </div>
-
-    </div>
-   </ul>
-       <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-
+   <div id="map"></div>
+       <script async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj8bYpM2M0T8I4xRKqvToSn9_fsRYC6dc&callback=initMap">
+       </script>
   </body>
+</html> -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Elevation Map</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+  <script src="app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+  <ul id="slide-out" class="side-nav">
+    <input type="text" class="location" name="" value="">
+    <button type="button" class= "add-location" name="button">Add Location</button>
+    <ul class = "location-list">
+
+    </ul>
+  </br>
+    <button type="button" class= "sort-elevations" name="button">Sort Elevations</button>
+
+  </div>
+
+  </div>
+ </ul>
+     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+  <div id="map"></div>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj8bYpM2M0T8I4xRKqvToSn9_fsRYC6dc&callback=initMap">
+  </script>
+</body>
+
 </html>
