@@ -2,7 +2,13 @@
   height: calc(100vh - 110px);
   width: 100%;
  }
-
+.icon{
+  width:50px;
+  float:left;
+}
+.title{
+  font-size: 250%;
+}
  .elevation-list{
     cursor: pointer;
   }
