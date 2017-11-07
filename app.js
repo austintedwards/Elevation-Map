@@ -2,6 +2,8 @@ $(()=> {
 let location_array = []
 let geocode_array=[]
 let elevation_obj = {}
+var elevation_sortable = [];
+
   // Initialize collapse button
   $(".button-collapse").sideNav({});
 
@@ -21,12 +23,10 @@ let elevation_obj = {}
 
   $(".sort-elevations").click(() => {
     if (geocode_array.length>1){
-      geocode_array.forEach(local=>{
-        google_elevations(local)
-      })
+      sort(elevation_sortable, elevation_sortable.length )
+
     }
 
-    console.log(elevation_obj)
 })
 
 
@@ -40,6 +40,8 @@ let google_locations = local => {
       position: data.results["0"].geometry.location,
       map: map
     });
+    google_elevations(geocode_array[geocode_array.length-1])
+
   })
   .fail(()=> {
     console.log( "error" );
@@ -60,9 +62,25 @@ let google_locations = local => {
   let google_elevations = local =>{
     var elevator = new google.maps.ElevationService;
     elevator.getElevationForLocations({'locations':[local.geometry.location]}, results=>{
-      elevation_obj[local.formatted_address] = results["0"].elevation
+      elevation_sortable.push([local.formatted_address, results["0"].elevation])
 })
 }
+
+let sort = (array,n) => {
+  if (n===1) return;
+
+  for(var i=0; i<n-1;i++){
+    if (array[i][1] < array[i+1][1]){
+      var a = array[i]
+      array[i] = array[i+1]
+      array[i+1] = a
+    }
+  }
+  console.log(array)
+  sort(array, n-1)
+
+}
+
 
 });
 
