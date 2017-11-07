@@ -18,9 +18,13 @@ let elevation_sortable = [];
 
   $(".add-location").click(() => {
     let new_local = $(".location").val()
+    if (new_local.match(/[a-z]/i)){
     $(".location-list").append(`<div class = '${new_local}'><li class ='col s10'>${new_local}</li><button class ='col s2 btn-flat remove-location'>X</button></div>`)
     location_array.push(new_local)
     google_locations(new_local)
+  }else{
+    alert("Please only include text in the input.")
+  }
     $(".location").val('')
   })
 
@@ -33,7 +37,8 @@ let elevation_sortable = [];
   })
 
   $(".sort-elevations").click(() => {
-    if (geocode_array.length>1){
+    $(".elevation-list").empty()
+    if (geocode_array.length>=1){
       console.log(elevation_sortable)
       sort(elevation_sortable, elevation_sortable.length )
       $(".elevation-list").append(`<h6>Elevations Decending:</h6>`)
@@ -54,6 +59,8 @@ let elevation_sortable = [];
      map.setCenter(elevation_sortable[0][2])
      map.setZoom(10);
 
+    }else{
+      alert("Please add location")
     }
 
 })
