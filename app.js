@@ -1,6 +1,7 @@
 $(()=> {
 let location_array = []
 let geocode_array=[]
+let elevation_obj = {}
   // Initialize collapse button
   $(".button-collapse").sideNav({});
 
@@ -20,8 +21,7 @@ let geocode_array=[]
 
   $(".sort-elevations").click(() => {
     if (geocode_array.length>1){
-      console.log(geocode_array)
-      google_elevations("denver")
+      google_elevations(geocode_array["0"].geometry.location)
     }
 })
 
@@ -32,30 +32,36 @@ let google_locations = local => {
   $.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${local}&key=${ACCESS_KEY}`)
   .done(data => {
     geocode_array.push(data.results["0"])
+    var marker = new google.maps.Marker({
+      position: data.results["0"].geometry.location,
+      map: map
+    });
   })
   .fail(()=> {
     console.log( "error" );
   })
 }
 
-
 //installing the map
-  var Denver = {
-    lat: 39.7392358,
-    lng: -104.990251
+  var center = {
+    lat: 0,
+    lng: 0
   };
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 13,
-    center: Denver
+    zoom: 2,
+    center: center
   });
-  var marker = new google.maps.Marker({
-    position: Denver,
-    map: map
-  });
-  var elevator = new google.maps.ElevationService;
-  elevator.getElevationForLocations({'locations':[Denver]},(results,status)=>{
-    console.log(results)
-  })
+
+
+  let google_elevations = local =>{
+    var elevator = new google.maps.ElevationService;
+  //
+    elevator.getElevationForLocations({'locations':[local]}, results=>{
+      console.log(results)
+    })
+
+}
+
 });
 
 $(document).on('click','.remove-location', function(){
