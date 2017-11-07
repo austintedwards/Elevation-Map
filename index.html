@@ -1,14 +1,4 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-  </head>
-  <body>
-   <div id="map"></div>
-       <script async defer
-       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj8bYpM2M0T8I4xRKqvToSn9_fsRYC6dc&callback=initMap">
-       </script>
-  </body>
-</html> -->
+
 <!DOCTYPE html>
 <html>
 
@@ -26,20 +16,29 @@
   <div class="container">
     <div class="row">
   <ul id="slide-out" class="side-nav">
-    <input type="text" class="location" name="" value="">
-    <button type="button" class= "add-location" name="button">Add Location</button>
+    <div class="row">
+
+    <input type="text" class="location " placeholder="Input Location" name="" value="">
+    <button type="button" class= "add-location button" name="button">Add Location</button>
+
+    </div>
     <ul class = "location-list">
 
     </ul>
   </br>
-    <button type="button" class= "sort-elevations" name="button">Sort Elevations</button>
+    <button type="button" class= "sort-elevations button" name="button">Sort Elevations</button>
+  </br>
+    <ol class = "elevation-list">
 
-  </div>
+    </ol>
 
-  </div>
  </ul>
-     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+</div>
 
+</div>
+<h3>Elevation Map</h3>
+
+     <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
   <div id="map"></div>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj8bYpM2M0T8I4xRKqvToSn9_fsRYC6dc&callback=initMap">
   </script>

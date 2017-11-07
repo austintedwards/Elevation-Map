@@ -1,4 +1,16 @@
 #map {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 110px);
   width: 100%;
  }
+
+ .elevation-list{
+    cursor: pointer;
+  }
+  .location, .location-list, .elevation-list{
+    text-align: center;
+  }
+.button {
+  display: block;
+  text-align: center;
+  margin: auto;
+}

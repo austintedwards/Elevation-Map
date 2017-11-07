@@ -1,8 +1,17 @@
 $(()=> {
 let location_array = []
 let geocode_array=[]
-let elevation_obj = {}
-var elevation_sortable = [];
+let elevation_sortable = [];
+//installing the map
+  const center = {
+    lat: 0,
+    lng: 0
+  };
+  const map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 2,
+    center: center
+  });
+
 
   // Initialize collapse button
   $(".button-collapse").sideNav({});
@@ -15,17 +24,49 @@ var elevation_sortable = [];
     $(".location").val('')
   })
 
-  $(".location-list").click((event)=>{
+  $(".location-list").on("click",".remove-location",(event)=>{
     let text = $(event)["0"].target.parentNode.className
-    var index = location_array.indexOf(text);
+    let index = location_array.indexOf(text);
+    if (index > -1) geocode_array.splice(index, 1)
     if (index > -1) location_array.splice(index, 1)
+    if (index > -1) elevation_sortable.splice(index, 1)
   })
 
   $(".sort-elevations").click(() => {
     if (geocode_array.length>1){
+      console.log(elevation_sortable)
       sort(elevation_sortable, elevation_sortable.length )
+      $(".elevation-list").append(`<h6>Elevations Decending:</h6>`)
+
+     elevation_sortable.forEach(local =>{
+       let marker = new google.maps.Marker({
+         position: local[2],
+         map: map
+       });
+       console.log(local)
+       let place = local[0]
+       let location = local[2]
+
+       let height = local[1].toFixed(2)
+       $(".elevation-list").append(`<li class ='${place}'>${place}: ${height} meters</li>`)
+     }
+     )
+     map.setCenter(elevation_sortable[0][2])
+     map.setZoom(10);
 
     }
+
+})
+
+$(".elevation-list").on("click","li",(event)=>{
+  let local_text = event.currentTarget.className
+  for(let i =0; i<elevation_sortable.length; i++){
+    if(elevation_sortable[i][0]===local_text){
+      let local_spot = elevation_sortable[i][2]
+      map.setCenter(local_spot)
+      map.setZoom(10);
+    }
+  }
 
 })
 
@@ -36,10 +77,6 @@ let google_locations = local => {
   $.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${local}&key=${ACCESS_KEY}`)
   .done(data => {
     geocode_array.push(data.results["0"])
-    var marker = new google.maps.Marker({
-      position: data.results["0"].geometry.location,
-      map: map
-    });
     google_elevations(geocode_array[geocode_array.length-1])
 
   })
@@ -48,35 +85,25 @@ let google_locations = local => {
   })
 }
 
-//installing the map
-  var center = {
-    lat: 0,
-    lng: 0
-  };
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 2,
-    center: center
-  });
 
 
   let google_elevations = local =>{
-    var elevator = new google.maps.ElevationService;
+    let elevator = new google.maps.ElevationService;
     elevator.getElevationForLocations({'locations':[local.geometry.location]}, results=>{
-      elevation_sortable.push([local.formatted_address, results["0"].elevation])
+      elevation_sortable.push([local.formatted_address, results["0"].elevation, local.geometry.location])
 })
 }
 
 let sort = (array,n) => {
-  if (n===1) return;
+  if (n===1) return ;
 
-  for(var i=0; i<n-1;i++){
+  for(let i=0; i<n-1;i++){
     if (array[i][1] < array[i+1][1]){
-      var a = array[i]
+      let a = array[i]
       array[i] = array[i+1]
       array[i+1] = a
     }
   }
-  console.log(array)
   sort(array, n-1)
 
 }
