@@ -21,8 +21,12 @@ let elevation_obj = {}
 
   $(".sort-elevations").click(() => {
     if (geocode_array.length>1){
-      google_elevations(geocode_array["0"].geometry.location)
+      geocode_array.forEach(local=>{
+        google_elevations(local)
+      })
     }
+
+    console.log(elevation_obj)
 })
 
 
@@ -55,11 +59,9 @@ let google_locations = local => {
 
   let google_elevations = local =>{
     var elevator = new google.maps.ElevationService;
-  //
-    elevator.getElevationForLocations({'locations':[local]}, results=>{
-      console.log(results)
-    })
-
+    elevator.getElevationForLocations({'locations':[local.geometry.location]}, results=>{
+      elevation_obj[local.formatted_address] = results["0"].elevation
+})
 }
 
 });
