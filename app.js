@@ -40,18 +40,22 @@ let google_locations = local => {
 
 
 //installing the map
-  var uluru = {
+  var Denver = {
     lat: 39.7392358,
     lng: -104.990251
   };
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 13,
-    center: uluru
+    center: Denver
   });
   var marker = new google.maps.Marker({
-    position: uluru,
+    position: Denver,
     map: map
   });
+  var elevator = new google.maps.ElevationService;
+  elevator.getElevationForLocations({'locations':[Denver]},(results,status)=>{
+    console.log(results)
+  })
 });
 
 $(document).on('click','.remove-location', function(){
